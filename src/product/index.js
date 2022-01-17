@@ -1,17 +1,16 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import "./index.css";
 
 function ProductPage() {
   const { id } = useParams();
-  const [product, setProduct] = useState[null];
+  const [product, setProduct] = useState(null);
   useEffect(function () {
     axios
-      .get(
-        `https://4ffc4d58-e9c2-41cc-be11-7f0696ce2819.mock.pstmn.io/products/${id}`
-      )
+      .get(`http://localhost:8080/products/${id}`)
       .then(function (result) {
-        setProduct(result.data);
+        setProduct(result.data.product);
       })
       .catch(function (error) {
         console.error(error);
@@ -25,16 +24,17 @@ function ProductPage() {
   return (
     <div>
       <div id="image-box">
-        <img src={"/" + product.imageurl} />
+        <img src={"/" + product.imageUrl} />
       </div>
       <div id="profile-box">
-        <img src={"/images/icons/avatar.png"} />
+        <img src="/images/icons/avatar.png" />
         <span>{product.seller}</span>
       </div>
       <div id="contents-box">
         <div id="name">{product.name}</div>
-        <div id="price">{product.price}</div>
-        <div id="description">{product.description}</div>
+        <div id="price">{product.price}원</div>
+        <div id="createdAt">2020년 12월 8일</div>
+        <div id="description">{product.description} </div>
       </div>
     </div>
   );
